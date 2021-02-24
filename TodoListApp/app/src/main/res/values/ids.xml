@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cv_qty" type="id" />
+    <item name="cv_itemName" type="id" />
+    <item name="cv_note" type="id" />
+    <item name="cv_shop_date" type="id" />
+    <item name="card_pertanyaan" type="id" />
+</resources>
