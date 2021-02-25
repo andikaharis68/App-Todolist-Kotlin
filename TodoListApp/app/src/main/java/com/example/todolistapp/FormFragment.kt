@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolistapp.databinding.FragmentFormBinding
 import com.example.todolistapp.entity.Item
@@ -65,9 +66,15 @@ class FormFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        sharedViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                val repo = ItemRepository()
+                return MainActivityViewModel(repo) as T
+            }
+        }).get(MainActivityViewModel::class.java)
         viewModel = ViewModelProvider(this).get(FormFragmentViewModel::class.java)
     }
+
     private fun subscribe() {
         viewModel.isItemValid.observe(this) {
             when (it.status) {
@@ -89,5 +96,3 @@ class FormFragment : Fragment() {
         }
     }
 }
-
-

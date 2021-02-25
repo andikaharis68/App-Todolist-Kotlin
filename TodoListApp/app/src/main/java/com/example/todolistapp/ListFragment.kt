@@ -5,35 +5,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.todolistapp.entity.Item
+import com.example.todolistapp.databinding.FragmentListBinding
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment: Fragment() {
 
     lateinit var viewModel: MainActivityViewModel
+    private lateinit var rvAdapter: RecyclerAdapter
+    private lateinit var binding: FragmentListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        initViewModel()
+        subscribe()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        binding = FragmentListBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var items = viewModel.items
-        recycler_view_item.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = RecyclerAdapter(items)
+        binding.apply {
+            rvAdapter = RecyclerAdapter(viewModel)
+            recycler_view_item.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = rvAdapter
+            }
+        }
+    }
+
+    fun initViewModel() {
+        viewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                val repo = ItemRepository()
+                return MainActivityViewModel(repo) as T
+            }
+        }).get(MainActivityViewModel::class.java)
+    }
+
+    fun subscribe() {
+        viewModel.itemLiveData.observe(this) {
+            rvAdapter.setData(it)
         }
     }
 }

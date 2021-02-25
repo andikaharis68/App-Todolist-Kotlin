@@ -1,17 +1,34 @@
 package com.example.todolistapp
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.todolistapp.entity.Item
 
-class MainActivityViewModel : ViewModel() {
-    var items : MutableList<Item> = mutableListOf(
-        Item("20-02-2021", "Meat", 12, "oke"),
-        Item("11-03-2021", "Koll", 10, "aman"),
-        Item("06-04-2021", "Carrot", 8, "sehat")
-    )
+class MainActivityViewModel(val repository: SimpleRepository) : ViewModel(), ItemClickListener  {
+    private var _itemLiveData = MutableLiveData<List<Item>>()
+
+    val itemLiveData: LiveData<List<Item>>
+        get() {
+            return _itemLiveData
+        }
+
+    init {
+        loadItemData()
+    }
+
+    fun loadItemData() {
+        _itemLiveData.value = repository.list()
+    }
+
+    override fun onDelete(item: Item) {
+        repository.delete(item)
+        loadItemData()
+    }
 
     fun addItem(item: Item){
-        items.add(item)
+        repository.add(item)
+        loadItemData()
     }
 }
 

@@ -1,40 +1,36 @@
 package com.example.todolistapp
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolistapp.R
 import com.example.todolistapp.entity.Item
 
-class RecyclerAdapter(items : MutableList<Item>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapter<RecyclerHolder>() {
 
-    lateinit var viewModel: MainActivityViewModel
-    var item = items
+    var items = ArrayList<Item>()
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var itemName: TextView = itemView.findViewById(R.id.cv_name)
-        var itemQty: TextView = itemView.findViewById(R.id.cv_qty)
-        var itemNote: TextView = itemView.findViewById(R.id.cv_note)
-        var itemDate: TextView = itemView.findViewById(R.id.cv_date)
+    //    methode ini dipanggil setiapkali perlu membuat view holder baru
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder  {
+        val inflater = LayoutInflater.from(parent.context)
+        val itemView = inflater.inflate(R.layout.card_view, parent, false)
+        return RecyclerHolder(itemView, itemClickListener)
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.card_view, viewGroup, false)
-        return ViewHolder(v)
+    //    method ini untuk distribusi viewholder dengan data
+    override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
+        val item = items[position]
+        holder.bind(item)
     }
 
+    //    Untuk mendapatkan ukuran data
     override fun getItemCount(): Int {
-        return item.size
+        return items.size
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemName.text = item[i].name
-        viewHolder.itemQty.text = item[i].quantity.toString()
-        viewHolder.itemNote.text = item[i].note
-        viewHolder.itemDate.text = item[i].date
+    fun setData(newItemList: List<Item>) {
+        items.clear()
+        items.addAll(newItemList)
+        notifyDataSetChanged()
     }
+
 }
