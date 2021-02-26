@@ -1,10 +1,11 @@
-package com.example.todolistapp
+package com.example.todolistapp.presentation.item.home
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import androidx.appcompat.app.AlertDialog;
+import com.example.todolistapp.R
 
 class LoadingDialog {
     companion object {

@@ -1,4 +1,4 @@
-package com.example.todolistapp
+package com.example.todolistapp.util
 
 import android.text.Editable
 

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/nav_add"
-        android:name="com.example.todolistapp.FormFragment"
+        android:name="com.example.todolistapp.presentation.item.home.FormFragment"
         android:label="fragment_form"
         tools:layout="@layout/fragment_form" />
     <fragment
         android:id="@+id/nav_list"
-        android:name="com.example.todolistapp.ListFragment"
+        android:name="com.example.todolistapp.presentation.item.home.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" />
     <action

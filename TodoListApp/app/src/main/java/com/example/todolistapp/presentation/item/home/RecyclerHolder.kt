@@ -1,7 +1,6 @@
-package com.example.todolistapp
+package com.example.todolistapp.presentation.item.home
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolistapp.databinding.CardViewBinding
 import com.example.todolistapp.entity.Item

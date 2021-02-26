@@ -1,11 +1,13 @@
-package com.example.todolistapp
+package com.example.todolistapp.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.todolistapp.entity.Item
+import com.example.todolistapp.presentation.item.home.ItemClickListener
+import com.example.todolistapp.repositories.SimpleRepository
 
-class MainActivityViewModel(val repository: SimpleRepository) : ViewModel(), ItemClickListener  {
+class MainActivityViewModel(val repository: SimpleRepository) : ViewModel(), ItemClickListener {
     private var _itemLiveData = MutableLiveData<List<Item>>()
 
     val itemLiveData: LiveData<List<Item>>

@@ -1,7 +1,7 @@
 package com.example.todolistapp.entity
 
 import android.text.Editable
-import com.example.todolistapp.ValidationApp
+import com.example.todolistapp.util.ValidationApp
 
 //
 //import java.util.*

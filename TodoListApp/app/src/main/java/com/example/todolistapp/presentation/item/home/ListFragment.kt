@@ -1,4 +1,4 @@
-package com.example.todolistapp
+package com.example.todolistapp.presentation.item.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolistapp.databinding.FragmentListBinding
+import com.example.todolistapp.presentation.main.MainActivityViewModel
+import com.example.todolistapp.repositories.ItemRepository
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment: Fragment() {

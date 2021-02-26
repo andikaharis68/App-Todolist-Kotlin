@@ -1,8 +1,9 @@
-package com.example.todolistapp
+package com.example.todolistapp.presentation.item.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolistapp.R
 import com.example.todolistapp.entity.Item
 
 class RecyclerAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapter<RecyclerHolder>() {
@@ -10,7 +11,7 @@ class RecyclerAdapter(val itemClickListener: ItemClickListener): RecyclerView.Ad
     var items = ArrayList<Item>()
 
     //    methode ini dipanggil setiapkali perlu membuat view holder baru
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder  {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(R.layout.card_view, parent, false)
         return RecyclerHolder(itemView, itemClickListener)
@@ -32,5 +33,4 @@ class RecyclerAdapter(val itemClickListener: ItemClickListener): RecyclerView.Ad
         items.addAll(newItemList)
         notifyDataSetChanged()
     }
-
 }
