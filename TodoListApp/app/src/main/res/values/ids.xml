@@ -5,4 +5,5 @@
     <item name="cv_note" type="id" />
     <item name="cv_shop_date" type="id" />
     <item name="card_pertanyaan" type="id" />
+    <item name="recycler_view_item" type="id" />
 </resources>

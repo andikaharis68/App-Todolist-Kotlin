@@ -41,6 +41,15 @@ class FormFragment : Fragment() {
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        arguments?.let {
+            val itemUpdate = it.getParcelable<Item>("result")
+            itemUpdate?.let {
+                Toast.makeText(requireContext(), "Success update ${it.name}", Toast.LENGTH_LONG)
+                        .show()
+            }
+        }
+
         loadingDialog = LoadingDialog.build(requireContext())
         binding = FragmentFormBinding.inflate(layoutInflater)
         binding.apply {
@@ -61,7 +70,7 @@ class FormFragment : Fragment() {
             })
             buttonAdd.setOnClickListener {
                 var quantity = Item.quantityCheck(txtQty.text)
-                item = Item(txtShoppingDate.text.toString(), txtItemName.text.toString(), quantity, txtNotes.text.toString())
+                item = Item("1", txtShoppingDate.text.toString(), txtItemName.text.toString(), quantity, txtNotes.text.toString())
                 viewModel.inputItemValidation(item!!)
             }
         }
@@ -85,7 +94,7 @@ class FormFragment : Fragment() {
                 ResourceStatus.SUCCESS -> {
                     loadingDialog.hide()
                     sharedViewModel.addItem(item!!)
-                    findNavController().navigate(R.id.action_global_listFragment)
+                    findNavController().navigate(R.id.action_nav_add_to_nav_list)
                     println("succes")}
                 ResourceStatus.FAIL -> {
                     loadingDialog.hide()

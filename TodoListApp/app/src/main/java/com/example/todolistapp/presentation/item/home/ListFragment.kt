@@ -1,14 +1,18 @@
 package com.example.todolistapp.presentation.item.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todolistapp.R
 import com.example.todolistapp.databinding.FragmentListBinding
 import com.example.todolistapp.presentation.main.MainActivityViewModel
 import com.example.todolistapp.repositories.ItemRepository
@@ -37,6 +41,7 @@ class ListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            viewModel.loadItemData()
             rvAdapter = RecyclerAdapter(viewModel)
             recycler_view_item.apply {
                 layoutManager = LinearLayoutManager(activity)
@@ -56,7 +61,13 @@ class ListFragment: Fragment() {
 
     fun subscribe() {
         viewModel.itemLiveData.observe(this) {
+            Log.d("subscribe","$it")
             rvAdapter.setData(it)
         }
+        viewModel.itemUpdateLiveData.observe(this) {
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.updateFragment, bundleOf("item_update" to it))
+        }
+
     }
 }

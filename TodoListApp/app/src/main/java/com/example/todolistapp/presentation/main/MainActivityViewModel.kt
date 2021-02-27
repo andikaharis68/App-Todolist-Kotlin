@@ -15,9 +15,11 @@ class MainActivityViewModel(val repository: SimpleRepository) : ViewModel(), Ite
             return _itemLiveData
         }
 
-    init {
-        loadItemData()
-    }
+    private var _itemUpdateLiveData = MutableLiveData<Item>()
+    val itemUpdateLiveData: LiveData<Item>
+        get() {
+            return _itemUpdateLiveData
+        }
 
     fun loadItemData() {
         _itemLiveData.value = repository.list()
@@ -26,6 +28,10 @@ class MainActivityViewModel(val repository: SimpleRepository) : ViewModel(), Ite
     override fun onDelete(item: Item) {
         repository.delete(item)
         loadItemData()
+    }
+
+    override fun onUpdate(item: Item) {
+        _itemUpdateLiveData.value = item
     }
 
     fun addItem(item: Item){

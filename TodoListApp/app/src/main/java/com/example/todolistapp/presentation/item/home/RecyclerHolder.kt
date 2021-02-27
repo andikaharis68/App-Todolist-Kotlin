@@ -18,6 +18,9 @@ class RecyclerHolder(view: View, val clickListener: ItemClickListener) : Recycle
             btDelete.setOnClickListener {
                 clickListener.onDelete(items)
             }
+            cardView.setOnClickListener {
+                clickListener.onUpdate(items)
+            }
         }
     }
 }
